@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-
-void HuffmannCompress(const char *fileName) {
-
-};
-void HuffmannDecompress(const char *fileName) {
-
-};
+#include <stdlib.h>
+#include "huffmann.h"
 
 int main(int argc, char **argv) {
     if (argc != 3) {
@@ -24,4 +19,5 @@ int main(int argc, char **argv) {
     }
     printf("Unknown argument: \"%s\"\n", argv[1]);
     return 0;
+
 }
