@@ -15,5 +15,6 @@ struct binary_tree_node{
 typedef struct binary_tree_node binary_tree_node;
 
 binary_tree_node* construct_tree(int freq[CHAR_CNT]);
-void printtree(binary_tree_node *head, char *p);
-
+void printcodes(binary_tree_node *head, char *p, FILE *file);
+void printfreq(binary_tree_node *head, FILE *file);
+char **getcodes(binary_tree_node *head);

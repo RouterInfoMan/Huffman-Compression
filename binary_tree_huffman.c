@@ -56,19 +56,57 @@ char get_tree_char(binary_tree_node *head, char *str) {
     }
     return tmp->data;
 }
-void printtree(binary_tree_node *head, char *p) {
+void printcodes(binary_tree_node *head, char *p, FILE *file) {
     char *t = (char *) malloc(strlen(p) + 1);
+    if (!head->left && !head->right) {
+        fprintf(file, "%c %d %s\n", head->data, head->freq, p);
+    }
     if (head->left) {
         strcpy(t, p);
         strcat(t, "0");
-        printtree(head->left, t);
+        printcodes(head->left, t, file);
     }
     if (head->right) {
         strcpy(t, p);
         strcat(t, "1");
-        printtree(head->right, t);
+        printcodes(head->right, t, file);
     }
+    free(t);
+}
+void _getcodes(binary_tree_node *head, char *array[CHAR_CNT], char *p, int len) { 
     if (!head->left && !head->right) {
-        printf("%c f: %d, c: %s\n", head->data, head->freq, p);
+        array[head->data] = (char *) calloc(len + 1, sizeof(char));
+        strncpy(array[head->data], p, len);
+        array[head->data][len+1] = 0;
+    }
+    if (head->left) {
+        p[len] = '0';
+        _getcodes(head->left, array, p, len + 1);
+    }
+    if (head->right) {
+        p[len] = '1';
+        _getcodes(head->right, array, p, len + 1);
+    }
+}
+char **getcodes(binary_tree_node *head) {
+    char **array = (char **) malloc(sizeof(char *) * CHAR_CNT);
+    int i;
+    for (i = 0; i < CHAR_CNT; i++) {
+        array[i] = NULL;
+    }
+    char *p = (char *) calloc(CHAR_CNT, sizeof(char));
+    _getcodes(head, array, p, 0);
+    free(p);
+    return array;
+}
+void printfreq(binary_tree_node *head, FILE *file) {
+    if (!head->left && !head->right) {
+        fprintf(file, "%c %d\n", head->data, head->freq);
+    }
+    if (head->left) {
+        printfreq(head->left, file);
+    }
+    if (head->right) {
+        printfreq(head->right, file);
     }
 }

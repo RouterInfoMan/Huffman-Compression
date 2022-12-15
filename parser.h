@@ -13,6 +13,8 @@ typedef struct {
 void input_parser_init(input_parser *par, FILE *file);
 char read_char(input_parser *par);
 void input_parser_delete(input_parser *par);
+int input_parser_rewind(input_parser *par);
+unsigned int read_uint(input_parser *par);
 
 typedef struct {
     FILE *file;

@@ -19,12 +19,27 @@ char read_char(input_parser *par) {
     }
     return par->buf[par->p];
 }
+unsigned int read_uint(input_parser *par) {
+    unsigned int res = 0;
+    char p = read_char(par);
+    while (!('0' <= p && p <= '9')) {
+        p = read_char(par);
+    }
+    while ('0' <= p && p <= '9') {
+        res = res * 10 + p - '0';
+        p = read_char(par);
+    }
+    return res;
+}
+int input_parser_rewind(input_parser *par) {
+    input_parser_init(par, par->file);
+    return fseek(par->file, 0, SEEK_SET);
+}
 void input_parser_delete(input_parser *par) {
     fclose(par->file);
     free(par);
     par = NULL;
 }
-
 void output_parser_init(output_parser *par, FILE *file) {
     if (!file) {
         printf("Invalid file!\n");

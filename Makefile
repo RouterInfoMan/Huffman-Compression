@@ -1,5 +1,5 @@
 all: main.o huffman.o priority_queue.o parser.o binary_tree_huffman.o
-	gcc -o main main.o huffman.o priority_queue.o parser.o binary_tree_huffman.o
+	gcc -g -o main main.o huffman.o priority_queue.o parser.o binary_tree_huffman.o
 
 main.o: main.c
 	gcc -c  main.c
