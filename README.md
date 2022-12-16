@@ -4,5 +4,5 @@ This is the 3rd homework at the Faculty of Automatic Control and Computer Scienc
 
 ## Running the program
 * To compile the program using `make all`
-* For compression run the program using `./main -c fileName`
-* For decompression use `./main -d fileName.cmp`
+* For compression run the program using `./main -c file outputfile`
+* For decompression use `./main -d file decompressedfile`
