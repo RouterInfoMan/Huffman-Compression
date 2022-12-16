@@ -6,8 +6,7 @@ void input_parser_init(input_parser *par, FILE *file) {
     }
     par->file = file;
     par->p = BUF_SIZE - 1;
-    par->eof = 0;
-    par->pos = BUF_SIZE + 1;
+    par->eofp = BUF_SIZE + 1;
 }
 
 int read_uchar(input_parser *par, unsigned char *c) {
@@ -16,11 +15,15 @@ int read_uchar(input_parser *par, unsigned char *c) {
         par->p = 0;
         int c = fread(par->buf, 1, BUF_SIZE, par->file);
         if (c < BUF_SIZE) {
-            par->eof = 1;
-            par->pos = c;
+            par->eofp = c;
         }
     }
+    if (par->eofp == par->p) {
+        *c = 0;
+        return 1;
+    }
     *c = par->buf[par->p];
+    return 0;
 }
 unsigned int read_uint(input_parser *par, unsigned int *res) {
     *res = 0;

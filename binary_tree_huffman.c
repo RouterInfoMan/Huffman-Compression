@@ -101,7 +101,7 @@ char **getcodes(binary_tree_node *head) {
 }
 void printfreq(binary_tree_node *head, FILE *file) {
     if (!head->left && !head->right) {
-        fprintf(file, "%uc %d\n", head->data, head->freq);
+        fprintf(file, "%c %d\n", head->data, head->freq);
     }
     if (head->left) {
         printfreq(head->left, file);

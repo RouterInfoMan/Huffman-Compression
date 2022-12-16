@@ -8,7 +8,7 @@ typedef struct {
     FILE *file;
     unsigned char buf[4096];
     unsigned int p;
-    int eof, pos;
+    int eofp;
 }input_parser;
 
 void input_parser_init(input_parser *par, FILE *file);
