@@ -2,12 +2,12 @@
 #include "priority_queue.h"
 #include <stdlib.h>
 #include <string.h>
-#define CHAR_CNT 127
+#define CHAR_CNT 256
 
 
 // -1 for internal node
 struct binary_tree_node{
-    char data;
+    unsigned char data;
     int freq;
     struct binary_tree_node *left, *right;
 };

@@ -6,15 +6,16 @@
 
 typedef struct {
     FILE *file;
-    char buf[4096];
-    unsigned int p; 
+    unsigned char buf[4096];
+    unsigned int p;
+    int eof, pos;
 }input_parser;
 
 void input_parser_init(input_parser *par, FILE *file);
-char read_char(input_parser *par);
+int read_uchar(input_parser *par, unsigned char *c);
+unsigned int read_uint(input_parser *par, unsigned int *res);
 void input_parser_delete(input_parser *par);
 int input_parser_rewind(input_parser *par);
-unsigned int read_uint(input_parser *par);
 
 typedef struct {
     FILE *file;

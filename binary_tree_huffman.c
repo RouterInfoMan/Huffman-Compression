@@ -7,7 +7,7 @@ int cmp_node(const void *a, const void *b) {
     return nb->freq - na->freq;
 }
 
-void binary_tree_init(binary_tree_node *node, char data, int freq) {
+void binary_tree_init(binary_tree_node *node, unsigned char data, int freq) {
     node->data = data;
     node->freq = freq;
 
@@ -25,7 +25,7 @@ binary_tree_node* construct_tree(int freq[CHAR_CNT]) {
             continue;
         }
         binary_tree_node *a = (binary_tree_node *)malloc(sizeof(binary_tree_node));
-        binary_tree_init(a, (char)i, freq[i]);
+        binary_tree_init(a, (unsigned char)i, freq[i]);
         pq_push(q, a);
     }
     while(q->size > 1) {
@@ -33,7 +33,7 @@ binary_tree_node* construct_tree(int freq[CHAR_CNT]) {
         a = pq_pop(q);
         b = pq_pop(q);
         binary_tree_node *internal = (binary_tree_node *)malloc(sizeof(binary_tree_node));
-        binary_tree_init(internal, -1, a->freq + b->freq);
+        binary_tree_init(internal, 0, a->freq + b->freq);
         internal->left = a;
         internal->right = b;
         pq_push(q, internal);
@@ -101,7 +101,7 @@ char **getcodes(binary_tree_node *head) {
 }
 void printfreq(binary_tree_node *head, FILE *file) {
     if (!head->left && !head->right) {
-        fprintf(file, "%c %d\n", head->data, head->freq);
+        fprintf(file, "%uc %d\n", head->data, head->freq);
     }
     if (head->left) {
         printfreq(head->left, file);

@@ -6,30 +6,41 @@ void input_parser_init(input_parser *par, FILE *file) {
     }
     par->file = file;
     par->p = BUF_SIZE - 1;
+    par->eof = 0;
+    par->pos = BUF_SIZE + 1;
 }
 
-char read_char(input_parser *par) {
+int read_uchar(input_parser *par, unsigned char *c) {
     par->p++;
     if (par->p == BUF_SIZE) {
         par->p = 0;
         int c = fread(par->buf, 1, BUF_SIZE, par->file);
         if (c < BUF_SIZE) {
-            par->buf[c + 1] = EOF;
+            par->eof = 1;
+            par->pos = c;
         }
     }
-    return par->buf[par->p];
+    *c = par->buf[par->p];
 }
-unsigned int read_uint(input_parser *par) {
-    unsigned int res = 0;
-    char p = read_char(par);
+unsigned int read_uint(input_parser *par, unsigned int *res) {
+    *res = 0;
+    char p;
+    int eof;
+    eof = read_uchar(par, &p);
+    if (eof)
+        return eof;
     while (!('0' <= p && p <= '9')) {
-        p = read_char(par);
+        eof = read_uchar(par, &p);
+        if (eof)
+            return eof;
     }
     while ('0' <= p && p <= '9') {
-        res = res * 10 + p - '0';
-        p = read_char(par);
+        *res = *res * 10 + p - '0';
+        eof = read_uchar(par, &p);
+        if (eof)
+            return eof;
     }
-    return res;
+    return 0;
 }
 int input_parser_rewind(input_parser *par) {
     input_parser_init(par, par->file);
