@@ -24,6 +24,7 @@ typedef struct {
     int ipos, opos;
 }bit_parser;
 
+void bit_parser_init(bit_parser *par, FILE *in, FILE *out, input_parser *par2);
 int get_bit(bit_parser *par);
 void put_bit(bit_parser *par, int bit);
 void bit_flush(bit_parser *par);

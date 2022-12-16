@@ -73,7 +73,7 @@ int get_bit(bit_parser *par) {
 void put_bit(bit_parser *par, int bit) {
     if (par->opos == 8) {
         par->opos = 0;
-        printf("%c", par->obyte);
+        fprintf(par->out, "%c", par->obyte);
     }
     if (bit) {
         par->obyte |= (1 << par->opos);
@@ -83,6 +83,6 @@ void put_bit(bit_parser *par, int bit) {
     par->opos++;
 }
 void bit_flush(bit_parser *par) {
-    printf("%c", par->obyte);
+    fprintf(par->out, "%c", par->obyte);
     par->opos = 0;
 }
