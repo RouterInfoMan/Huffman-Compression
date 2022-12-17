@@ -6,8 +6,8 @@
 
 typedef struct {
     FILE *file;
-    unsigned char buf[4096];
-    unsigned int p;
+    unsigned char buf[4096], byte;
+    unsigned int p, bpos;
     int eofp;
 }input_parser;
 
@@ -18,12 +18,13 @@ void input_parser_delete(input_parser *par);
 int input_parser_rewind(input_parser *par);
 
 typedef struct {
-    FILE *file;
-    char buf;
-    unsigned int mp;
-}output_parser;
+    FILE *in, *out;
+    input_parser *par;
+    unsigned char ibyte, obyte;
+    int ipos, opos;
+}bit_parser;
 
-void output_parser_init(output_parser *par, FILE *file);
-void output_parser_delete(output_parser *par);
-void put_bit(output_parser *par, int bit);
-void flush(output_parser *par);
+void bit_parser_init(bit_parser *par, FILE *in, FILE *out, input_parser *par2);
+int get_bit(bit_parser *par);
+void put_bit(bit_parser *par, int bit);
+void bit_flush(bit_parser *par);

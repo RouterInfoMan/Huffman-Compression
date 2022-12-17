@@ -29,11 +29,16 @@ void HuffmanEncode(char *in, char *out) {
     fprintf(output, "%d\n", cnt);
     printfreq(head, output);
 
+    bit_parser *bp = (bit_parser *) malloc(sizeof(bit_parser));
+    bit_parser_init(bp, input, output, inp);
     eof = read_uchar(inp, &p);
     while(!eof) {
-        fprintf(output, "%s", codes[p]);
+        for (int i = 0; codes[p][i]; i++) {
+            put_bit(bp, codes[p][i] - '0');
+        }
         eof = read_uchar(inp, &p);
     }
+    bit_flush(bp);
     int i;
     for (i = 0; i < CHAR_CNT; i++) {
         if(codes[i]) {
@@ -65,10 +70,11 @@ void HuffmanDecode(char *in, char *out) {
     binary_tree_node *head = construct_tree(freq), *tmp;
     tmp = head;
 
-
+    bit_parser *bp = (bit_parser *) malloc(sizeof(bit_parser));
+    bit_parser_init(bp, input, output, par);
     for (i = 0; i < ccnt;) {
-        read_uchar(par, &c);
-        if (c == '0') {
+        int bit = get_bit(bp);
+        if (bit == 0) {
             tmp = tmp->left;
         } else {
             tmp = tmp->right;
