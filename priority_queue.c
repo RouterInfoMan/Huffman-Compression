@@ -12,12 +12,12 @@ void pq_heapify(priority_queue *q, int index) {
     void **heap = q->heap;
 
     if (heap[left]) {
-        if (left <= q->size && q->cmp(heap[left], heap[index]) > 0) {
+        if (left < q->size && q->cmp(heap[left], heap[index]) > 0) {
             largest = left;
         }
     }
     if (heap[right]) {
-        if (right <= q->size && q->cmp(heap[right], heap[index]) > 0) {
+        if (right < q->size && q->cmp(heap[right], heap[index]) > 0) {
             largest = right;
         }
     }
