@@ -7,7 +7,7 @@
 typedef struct {
     FILE *file;
     unsigned char buf[4096], byte;
-    unsigned int p, bpos;
+    unsigned int p;
     int eofp;
 }input_parser;
 

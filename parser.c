@@ -42,6 +42,7 @@ unsigned int read_uint(input_parser *par, unsigned int *res) {
         if (eof)
             return eof;
     }
+    par->p--;
     return 0;
 }
 int input_parser_rewind(input_parser *par) {
